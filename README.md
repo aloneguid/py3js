@@ -10,37 +10,11 @@
 pip install py3js
 ```
 
-## Force Directed Graphs
+## Supports
 
-Simplest example - draw a simplified software release stages and teams involved:
+- Force-directed graphs
 
-```python
-	from py3js.network import ForceDirectedGraph, Node, Link
+## Examples
 
-    g = ForceDirectedGraph(1000, 500)
-
-    nodes = ["dev", "pre-prod", "prod", "developers", "testers", "managers"]
-    colours = ["green", "green", "green", "blue", "blue", "blue"]
-
-    for n, c in zip(nodes, colours):
-        g.add_node(Node(n, color=c))
-
-    # link process
-    g.add_link(Link("dev", "pre-prod"))
-    g.add_link(Link("pre-prod", "prod"))
-
-    # link involved
-    g.add_link(Link("developers", "dev"))
-    g.add_link(Link("developers", "pre-prod"))
-    g.add_link(Link("testers", "pre-prod"))
-    g.add_link(Link("managers", "prod"))
-
-    g.save("c:\\tmp\\1.html")
-```
-
-Produces:
-
-![](media/simplest.gif)
-
-Nodes are draggable, have arrows, and tooltips.
+Interactive examples are available in [Jupyter NBViewer](https://nbviewer.jupyter.org/github/aloneguid/py3js/tree/main/examples/).
 
