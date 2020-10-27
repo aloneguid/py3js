@@ -3,7 +3,7 @@ import pathlib
 
 from setuptools import setup, find_packages
 
-v_default = "0.0.2"
+v_default = "0.0.3"
 v_env = os.getenv("v")
 v = v_env if v_env else v_default
 

@@ -1,4 +1,6 @@
-# Python Wrapper for [d3js](https://d3js.org/)
+# Python Wrapper for [d3js](https://d3js.org/) 
+
+[![PyPI](https://img.shields.io/pypi/v/py3js)](https://pypi.org/project/py3js/) ![PyPI - License](https://img.shields.io/pypi/l/py3js)
 
 ## Why
 
