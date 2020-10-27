@@ -28,3 +28,12 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'python setup.py sdist bdist_wheel'
+
+- task: TwineAuthenticate@1
+  inputs:
+    pythonUploadServiceConnection: 'PyPi - py3js'
+    
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'twine upload -r myTestFeed --config-file $(PYPIRC_PATH) dist/*'
