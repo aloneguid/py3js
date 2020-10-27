@@ -1,6 +1,7 @@
 from importlib import resources
 import json
 from typing import List
+import base64
 
 
 class Node:
@@ -34,6 +35,8 @@ class ForceDirectedGraph:
                       .replace("$collision_radius", str(collision_radius))
                       .replace("$showNodeNames", "true" if show_node_names else "false")
                       .replace("$arrowRadius", str(arrow_radius)))
+        self._width = width
+        self._height = height
 
         self._nodes: List[Node] = []
         self._links: List[Link] = []
@@ -71,7 +74,12 @@ class ForceDirectedGraph:
         return r
 
     def _repr_html_(self):
-        return self._render_data()
+        data = self._render_data()
+        b64data = base64.b64encode(data.encode("utf-8")).decode("utf-8")
+        url = f"data:text/html;charset=utf-8;base64,{b64data}"
+        return f"<iframe src=\"{url}\" width=\"{self._width}\" height=\"{self._height}\" scrolling=\"no\" style=\"border:none !important;\"></iframe>"
+
+
 
     def save(self, path: str):
         with open(path, "w") as writer:
