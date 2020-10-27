@@ -19,10 +19,10 @@ steps:
     versionSpec: '$(python.version)'
   displayName: 'Use Python $(python.version)'
 
-- script: |
-    python -m pip install --upgrade pip
-    pip install twine
-  displayName: 'Install dependencies'
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'pip install twine'
   
 - task: Bash@3
   inputs:
