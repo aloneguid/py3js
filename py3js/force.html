@@ -5,8 +5,6 @@
     <title>D3 Force-Directed Graph</title>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <style>
-        .links line {
-        }
 
         .nodes circle {
             stroke: #fff;
@@ -29,6 +27,7 @@
         const x_levels = $x_levels;
         const collision_radius = $collision_radius;
         const showNodeNames = $showNodeNames;
+        const arrowRadius = $arrowRadius;
 
         const svg = d3.select("svg"),
             width = +svg.attr("width"),
@@ -39,16 +38,15 @@
             .data(["end"])      // Different link/path types can be defined here
             .enter().append("svg:marker")    // This section adds in the arrows
             .attr("id", String)
-            .attr("viewBox", "0 -5 10 10")
-            .attr("refX", 26) // distance from the end to beginning
-            .attr("refY", -1.5)
-            .attr("markerWidth", 6)
-            .attr("markerHeight", 6)
+            .attr("viewBox", "0 0 10 10")
+            .attr("refX", 10 + arrowRadius) // distance from the end to beginning
+            .attr("refY", 5)
+            .attr("markerWidth", 10)
+            .attr("markerHeight", 10)
             .attr("orient", "auto")
             .append("svg:path")
             .attr("fill", "#999")
-            //.attr("d", "M0,-5L10,0L0,5");
-            .attr("d", "M0,-5L10,0L0,5");
+            .attr("d", "M 0 0, L 0 10, L 10 5, L 0 0");
 
         let simulation = d3.forceSimulation()
             .force("charge", d3.forceManyBody())

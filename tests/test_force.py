@@ -2,11 +2,25 @@ from py3js.network import ForceDirectedGraph, Node, Link
 from random import randint
 
 
-def test_generates_html():
+def test_simplest():
     g = ForceDirectedGraph(1000, 500)
-    g.add_node(Node("source", "test tooltip"))
-    g.add_node(Node("dest #1", color="green"))
-    g.add_link(Link("source", "dest #1"))
+
+    nodes = ["dev", "pre-prod", "prod", "developers", "testers", "managers"]
+    colours = ["green", "green", "green", "blue", "blue", "blue"]
+
+    for n, c in zip(nodes, colours):
+        g.add_node(Node(n, color=c))
+
+    # link process
+    g.add_link(Link("dev", "pre-prod"))
+    g.add_link(Link("pre-prod", "prod"))
+
+    # link involved
+    g.add_link(Link("developers", "dev"))
+    g.add_link(Link("developers", "pre-prod"))
+    g.add_link(Link("testers", "pre-prod"))
+    g.add_link(Link("managers", "prod"))
+
     s = g._repr_html_()
     g.save("c:\\tmp\\1.html")
     print(s)
