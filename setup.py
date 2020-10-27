@@ -3,7 +3,7 @@ import pathlib
 
 from setuptools import setup, find_packages
 
-v_default = "0.0.0"
+v_default = "0.0.2"
 v_env = os.getenv("v")
 v = v_env if v_env else v_default
 
@@ -27,4 +27,7 @@ setup(
     include_package_data=True
 )
 
-# run python setup.py bdist_wheel
+# 1. run python setup.py bdist_wheel
+# 2. twine upload dist/*
+
+# https://realpython.com/pypi-publish-python-package/#adding-files-to-your-package

@@ -4,10 +4,12 @@ from typing import List
 
 
 class Node:
-    def __init__(self, name: str, tooltip: str = None, color: str = None):
+    def __init__(self, name: str, tooltip: str = None, color: str = None, level: int = None, radius: int = 15):
         self.name = name
         self.tooltip = tooltip
         self.color = color
+        self.level = level
+        self.radius = radius
 
 
 class Link:
@@ -20,11 +22,16 @@ class Link:
 
 class ForceDirectedGraph:
 
-    def __init__(self, width: int = 800, height: int = 600):
+    def __init__(self, width: int = 800, height: int = 600, x_levels: int = -1,
+                 collision_radius: int = 15,
+                 show_node_names: bool = True):
         self._html = resources.read_text("py3js", "force.html")
         self._html = (self._html
                       .replace("$width", str(width))
-                      .replace("$height", str(height)))
+                      .replace("$height", str(height))
+                      .replace("$x_levels", str(x_levels))
+                      .replace("$collision_radius", str(collision_radius))
+                      .replace("$showNodeNames", "true" if show_node_names else "false"))
 
         self._nodes: List[Node] = []
         self._links: List[Link] = []
@@ -40,10 +47,10 @@ class ForceDirectedGraph:
 
         nodes = [{
             "id": n.name,
-            "group": 1,
             "color": n.color or "black",
-            "forceX": 1,
-            "tooltip": n.tooltip
+            "level": n.level,
+            "tooltip": n.tooltip,
+            "radius": n.radius
         } for n in self._nodes]
 
         links = [{
