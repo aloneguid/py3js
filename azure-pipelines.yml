@@ -61,4 +61,4 @@ steps:
   displayName: 'twine upload'
   inputs:
     targetType: 'inline'
-    script: 'twine upload --verbose dist/*'
+    script: 'twine upload --verbose --non-interactive dist/*'
