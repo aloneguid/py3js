@@ -45,13 +45,13 @@ steps:
     targetType: 'inline'
     script: 'python setup.py sdist bdist_wheel'
   env:
-    v: $(v.full)
+    v: '$(v.majorMinor).0'
 
 - task: TwineAuthenticate@1
   condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"
   displayName: 'twine auth'
   inputs:
-    pythonUploadServiceConnection: 'PyPi'
+    pythonUploadServiceConnection: 'pypi'
     
 - task: Bash@3
   condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"
