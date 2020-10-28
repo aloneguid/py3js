@@ -4,16 +4,30 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
 
 trigger:
-- master
+  branches:
+   include:
+     - main
 
 pool:
   vmImage: 'ubuntu-latest'
+  
+variables:
+  - name: v.majorMinor
+    value: '0.0'
+  - name: v.rev
+    value: $[counter(variables['v.majorMinor'])]
+  - name: v.full
+    value: '$(v.majorMinor).$(v.rev)'
+
 strategy:
   matrix:
     Python37:
       python.version: '3.7'
 
 steps:
+
+- script: echo "##vso[build.updatebuildnumber]$(v.full)"
+
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(python.version)'
@@ -28,6 +42,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'python setup.py sdist bdist_wheel'
+  env:
+    v: $(v.full)
 
 - task: TwineAuthenticate@1
   inputs:
