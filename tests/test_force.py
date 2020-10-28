@@ -25,11 +25,12 @@ def test_simplest():
     g.save(save_path)
 
 
-def test_labels():
+def test_labels_and_strokes():
     g = ForceDirectedGraph(show_node_names=True)
     g.add_node(Node("one", radius=10))
     g.add_node(Node("two", radius=20))
     g.add_node(Node("three", radius=20))
+    g.add_node(Node("red border", stroke_color="red", stroke_width=5))
     g.save(save_path)
 
 

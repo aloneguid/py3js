@@ -5,12 +5,17 @@ import base64
 
 
 class Node:
-    def __init__(self, name: str, tooltip: str = None, color: str = None, level: int = None, radius: int = 8):
+    def __init__(self, name: str, tooltip: str = None, color: str = None, level: int = None,
+                 radius: int = 8,
+                 stroke_color: str = "black",
+                 stroke_width: int = 1):
         self.name = name
         self.tooltip = tooltip or name
         self.color = color
         self.level = level
         self.radius = radius
+        self.stroke_color = stroke_color
+        self.stroke_width = stroke_width
 
 
 class Link:
@@ -55,7 +60,9 @@ class ForceDirectedGraph:
             "color": n.color or "black",
             "level": n.level,
             "tooltip": n.tooltip,
-            "radius": n.radius
+            "radius": n.radius,
+            "stroke": n.stroke_color,
+            "stroke_width": n.stroke_width
         } for n in self._nodes]
 
         links = [{

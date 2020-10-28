@@ -6,11 +6,6 @@
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <style>
 
-        .nodes circle {
-            stroke: #fff;
-            stroke-width: 1.5px;
-        }
-
         text {
             font-family: sans-serif;
             font-size: 12px;
@@ -108,14 +103,17 @@
             event.subject.fy = null;
         }
 
+        // make a round circle!
         const circles = node.append("circle")
             .attr("r", d => d.radius)
-            .attr("fill", d => d.color);
+            .attr("fill", d => d.color)
+            .attr("stroke", d => d.stroke)
+            .attr("stroke-width", d => d.stroke_width);
 
         if(showNodeNames) {
             const labels = node.append("text")
                 .text(d => d.id)
-                .attr('x', d => d.radius)
+                .attr('x', d => d.radius + d.stroke_width)
                 .attr('y', 0);
         }
 
