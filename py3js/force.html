@@ -115,8 +115,8 @@
         if(showNodeNames) {
             const labels = node.append("text")
                 .text(d => d.id)
-                .attr('x', 15)
-                .attr('y', 5);
+                .attr('x', d => d.radius)
+                .attr('y', 0);
         }
 
         node.append("title")

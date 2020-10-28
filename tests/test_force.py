@@ -1,6 +1,7 @@
 from py3js.network import ForceDirectedGraph, Node, Link
 from random import randint
 
+save_path = "c:\\tmp\\1.html"
 
 def test_simplest():
     g = ForceDirectedGraph(1000, 500)
@@ -21,9 +22,15 @@ def test_simplest():
     g.add_link(Link("testers", "pre-prod"))
     g.add_link(Link("managers", "prod"))
 
-    s = g._repr_html_()
-    g.save("c:\\tmp\\1.html")
-    print(s)
+    g.save(save_path)
+
+
+def test_labels():
+    g = ForceDirectedGraph(show_node_names=True)
+    g.add_node(Node("one", radius=10))
+    g.add_node(Node("two", radius=20))
+    g.add_node(Node("three", radius=20))
+    g.save(save_path)
 
 
 def test_multi_level():
