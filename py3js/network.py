@@ -46,11 +46,13 @@ class ForceDirectedGraph:
         self._nodes: List[Node] = []
         self._links: List[Link] = []
 
-    def add_node(self, node: Node):
-        self._nodes.append(node)
+    def add_nodes(self, *node: Node):
+        for n in node:
+            self._nodes.append(n)
 
-    def add_link(self, link: Link):
-        self._links.append(link)
+    def add_links(self, *link: Link):
+        for l in link:
+            self._links.append(l)
 
     def _render_data(self):
         r = self._html
