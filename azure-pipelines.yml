@@ -67,4 +67,4 @@ steps:
   displayName: 'twine upload'
   inputs:
     targetType: 'inline'
-    script: 'twine upload --verbose --config-file $(PYPIRC_PATH) dist/*'
+    script: 'twine upload --verbose -r pypi1 --config-file $(PYPIRC_PATH) dist/*'
