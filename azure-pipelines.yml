@@ -34,11 +34,13 @@ steps:
   displayName: 'Use Python $(python.version)'
 
 - task: Bash@3
+  displayName: 'isntall twine'
   inputs:
     targetType: 'inline'
     script: 'pip install wheel twine'
   
 - task: Bash@3
+  displayName: 'build wheels'
   inputs:
     targetType: 'inline'
     script: 'python setup.py sdist bdist_wheel'
@@ -46,10 +48,14 @@ steps:
     v: $(v.full)
 
 - task: TwineAuthenticate@1
+  condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"
+  displayName: 'twine auth'
   inputs:
-    pythonUploadServiceConnection: 'PyPi - py3js'
+    pythonUploadServiceConnection: 'PyPi'
     
 - task: Bash@3
+  condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"
+  displayName: 'twine upload'
   inputs:
     targetType: 'inline'
-    script: 'twine upload -r py3js --config-file $(PYPIRC_PATH) dist/*'
+    script: 'twine upload -r pypi --config-file $(PYPIRC_PATH) dist/*'
