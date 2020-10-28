@@ -47,4 +47,11 @@ def test_multi_level():
     for i in range(0, 100):
         g.add_nodes(Node(f"lvl3 #{i}", level=3, color="blue", radius=randint(1, 5)))
 
+    # link some
+    for i in range(0, 2):
+        n_from = f"lvl1 #{randint(0, 10)}"
+        n_to = f"lvl2 #{randint(0, 100)}"
+        g.add_links(Link(n_from, n_to, opacity=0.1, is_arrow=False))
+
+
     g.save("c:\\tmp\\1.html")

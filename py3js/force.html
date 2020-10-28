@@ -70,11 +70,13 @@
             .attr("stroke", function (d) {
                 return d.color;
             })
-            .attr("stroke-opacity", 0.5)
-            .attr("marker-end", "url(#end)")
-            .attr("stroke-width", function (d) {
-                return Math.sqrt(d.value);
-            });
+            .attr("stroke-opacity", d => d.opacity)
+            //.attr("marker-end", "url(#end)")
+            .attr("marker-end", d => d.arrow ? "url(#end)" : "")
+            .attr("stroke-width", d => d.width);
+
+            //.attr("stroke-width", d => Math.sqrt(d.value)
+            //);
 
         const node = svg.append("g")
             .attr("class", "nodes")

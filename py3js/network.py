@@ -19,11 +19,17 @@ class Node:
 
 
 class Link:
-    def __init__(self, source: str, target: str, color: str = "black", fill: str = "black"):
+    def __init__(self, source: str, target: str, color: str = "black", fill: str = "black",
+                 opacity: float = 0.5,
+                 width: float = 1,
+                 is_arrow: bool = True):
         self.source = source
         self.target = target
         self.color = color
         self.fill = fill
+        self.opacity = opacity
+        self.width = width
+        self.is_arrow = is_arrow
 
 
 class ForceDirectedGraph:
@@ -71,7 +77,10 @@ class ForceDirectedGraph:
             "source": l.source,
             "target": l.target,
             "color": l.color,
-            "fill": l.fill
+            "fill": l.fill,
+            "opacity": l.opacity,
+            "width": l.width,
+            "arrow": l.is_arrow
         } for l in self._links]
 
         nodes_json = json.dumps(nodes)
