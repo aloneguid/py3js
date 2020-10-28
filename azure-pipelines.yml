@@ -47,15 +47,6 @@ steps:
   env:
     v: '$(v.majorMinor).0'
 
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      write-host $env:PYPIRC_PATH
-      
-      cat $env:PYPIRC_PATH
-    pwsh: true
-
 - task: Bash@3
   condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"
   displayName: 'twine upload'
