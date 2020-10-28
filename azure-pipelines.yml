@@ -4,36 +4,52 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
 
 trigger:
-- master
+  branches:
+   include:
+     - main
 
 pool:
   vmImage: 'ubuntu-latest'
+  
+variables:
+  - name: v.majorMinor
+    value: '0.1'
+  - name: v.rev
+    value: $[counter(variables['v.majorMinor'])]
+  - name: v.full
+    value: '$(v.majorMinor).$(v.rev)'
+
 strategy:
   matrix:
     Python37:
       python.version: '3.7'
 
 steps:
+
+- script: echo "##vso[build.updatebuildnumber]$(v.full)"
+
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(python.version)'
   displayName: 'Use Python $(python.version)'
 
 - task: Bash@3
+  displayName: 'isntall twine'
   inputs:
     targetType: 'inline'
     script: 'pip install wheel twine'
   
 - task: Bash@3
+  displayName: 'build wheels'
   inputs:
     targetType: 'inline'
     script: 'python setup.py sdist bdist_wheel'
+  env:
+    v: '$(v.majorMinor).0'
 
-- task: TwineAuthenticate@1
-  inputs:
-    pythonUploadServiceConnection: 'PyPi - py3js'
-    
 - task: Bash@3
+  condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"
+  displayName: 'twine upload'
   inputs:
     targetType: 'inline'
-    script: 'twine upload -r myTestFeed --config-file $(PYPIRC_PATH) dist/*'
+    script: 'twine upload --verbose --non-interactive dist/*'
