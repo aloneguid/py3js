@@ -5,7 +5,7 @@ save_path = "c:\\tmp\\1.html"
 
 
 def test_simplest():
-    g = ForceDirectedGraph(1000, 500)
+    g = ForceDirectedGraph(800, 200)
 
     nodes = ["dev", "pre-prod", "prod", "developers", "testers", "managers"]
     colours = ["green", "green", "green", "blue", "blue", "blue"]
@@ -24,6 +24,7 @@ def test_simplest():
     g.add_links(Link("managers", "prod"))
 
     g.save(save_path)
+    print(g._repr_html_())
 
 
 def test_labels_and_strokes():
@@ -55,3 +56,43 @@ def test_multi_level():
 
 
     g.save("c:\\tmp\\1.html")
+
+
+def test_twitter_nel():
+    path = "c:\\tmp\\TWITTER-Real-Graph-Partial.nel"
+    with open(path, "r") as reader:
+        lines = reader.readlines()
+
+    g = ForceDirectedGraph(1000, 1000, collision_radius=20, show_node_names=True)
+
+    # n 1 apple
+    # n 2 store
+    # n 3 buy
+    # n 4 mac
+    # e 1 2 3.034013E-4
+    # e 3 4 1.6500772E-4
+    # e 3 2 3.5130675E-4
+    # g 2191352508 56
+
+    mp = dict()
+    for line in lines[:10]:
+        pts = line.split(" ")
+        if len(pts) >= 3:
+            if pts[0] == "n":
+                id = pts[1]
+                name = pts[2]
+                g.add_nodes(Node(id, name, f"id: {id}, name: {name}", radius=3, stroke_width=0))
+                mp[id] = name
+            if pts[0] == "e":
+                id_from = pts[1]
+                id_to = pts[2]
+                g.add_links(Link(id_from, id_to))
+        else:
+            mp = dict()
+
+
+    g.save(save_path)
+
+    print(len(lines))
+
+

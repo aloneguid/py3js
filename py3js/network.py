@@ -5,12 +5,17 @@ import base64
 
 
 class Node:
-    def __init__(self, name: str, tooltip: str = None, color: str = None, level: int = None,
+    def __init__(self,
+                 id: str,
+                 label: str,
+                 tooltip: str = None,
+                 color: str = "black", level: int = None,
                  radius: int = 8,
                  stroke_color: str = "black",
                  stroke_width: int = 1):
-        self.name = name
-        self.tooltip = tooltip or name
+        self.id = id
+        self.label = label
+        self.tooltip = tooltip or label
         self.color = color
         self.level = level
         self.radius = radius
@@ -19,14 +24,14 @@ class Node:
 
 
 class Link:
-    def __init__(self, source: str, target: str, color: str = "black", fill: str = "black",
-                 opacity: float = 0.5,
+    def __init__(self, source: str, target: str, color: str = "orange",
+                 opacity: float = 1.0,
                  width: float = 1,
                  is_arrow: bool = True):
+        self.id = 0
         self.source = source
         self.target = target
         self.color = color
-        self.fill = fill
         self.opacity = opacity
         self.width = width
         self.is_arrow = is_arrow
@@ -52,32 +57,37 @@ class ForceDirectedGraph:
         self._nodes: List[Node] = []
         self._links: List[Link] = []
 
+        self._link_id_i = 0;
+
     def add_nodes(self, *node: Node):
         for n in node:
             self._nodes.append(n)
 
     def add_links(self, *link: Link):
-        for l in link:
-            self._links.append(l)
+        for lnk in link:
+            lnk.id = self._link_id_i
+            self._link_id_i += 1
+            self._links.append(lnk)
 
     def _render_data(self):
         r = self._html
 
         nodes = [{
-            "id": n.name,
-            "color": n.color or "black",
-            "level": n.level,
+            "id": n.id,
+            "label": n.label,
             "tooltip": n.tooltip,
+            "color": n.color,
+            "level": n.level,
             "radius": n.radius,
             "stroke": n.stroke_color,
             "stroke_width": n.stroke_width
         } for n in self._nodes]
 
         links = [{
+            "id": l.id,
             "source": l.source,
             "target": l.target,
             "color": l.color,
-            "fill": l.fill,
             "opacity": l.opacity,
             "width": l.width,
             "arrow": l.is_arrow
