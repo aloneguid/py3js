@@ -87,7 +87,8 @@
             .selectAll("path")
             .data(data_links)
             .join("path")
-            .attr("stroke", d => d.color);
+            .attr("stroke", d => d.color)
+            .attr("stroke-opacity", d => d.opacity);
 
         if(showArrows) {
             link.attr("marker-end", d => `url(#end-${d.id})`);
