@@ -7,7 +7,7 @@ import base64
 class Node:
     def __init__(self,
                  id: str,
-                 label: str,
+                 label: str = None,
                  tooltip: str = None,
                  color: str = "black", level: int = None,
                  radius: int = 8,
@@ -39,18 +39,17 @@ class Link:
 
 class ForceDirectedGraph:
 
-    def __init__(self, width: int = 800, height: int = 600, x_levels: int = -1,
+    def __init__(self, width: int = 800, height: int = 600,
+                 x_levels: int = -1,
                  collision_radius: int = 8,
-                 show_node_names: bool = False,
-                 arrow_radius: int = 8):
+                 link_type: str = "link"):
         self._html = resources.read_text("py3js", "force.html")
         self._html = (self._html
                       .replace("$width", str(width))
                       .replace("$height", str(height))
                       .replace("$x_levels", str(x_levels))
                       .replace("$collision_radius", str(collision_radius))
-                      .replace("$showNodeNames", "true" if show_node_names else "false")
-                      .replace("$arrowRadius", str(arrow_radius)))
+                      .replace("$linkType", link_type))
         self._width = width
         self._height = height
 

@@ -28,7 +28,7 @@ def test_simplest():
 
 
 def test_labels_and_strokes():
-    g = ForceDirectedGraph(show_node_names=True)
+    g = ForceDirectedGraph()
     g.add_nodes(Node("one", radius=10))
     g.add_nodes(Node("two", radius=20))
     g.add_nodes(Node("three", radius=20))
@@ -37,7 +37,7 @@ def test_labels_and_strokes():
 
 
 def test_multi_level():
-    g = ForceDirectedGraph(1000, 1000, x_levels=5, collision_radius=1, show_node_names=False)
+    g = ForceDirectedGraph(1000, 1000, x_levels=5, collision_radius=1)
 
     for i in range(0, 10):
         g.add_nodes(Node(f"lvl1 #{i}", tooltip=f"lvl1 #{i}", level=1, radius=randint(1, 40)))
@@ -63,7 +63,7 @@ def test_twitter_nel():
     with open(path, "r") as reader:
         lines = reader.readlines()
 
-    g = ForceDirectedGraph(1000, 1000, collision_radius=20, show_node_names=True)
+    g = ForceDirectedGraph(1000, 1000, collision_radius=20)
 
     # n 1 apple
     # n 2 store
@@ -81,7 +81,7 @@ def test_twitter_nel():
             if pts[0] == "n":
                 id = pts[1]
                 name = pts[2]
-                g.add_nodes(Node(id, name, f"id: {id}, name: {name}", radius=3, stroke_width=0))
+                g.add_nodes(Node(id, name, f"id: {id}, name: {name}", radius=10 + int(id) * 3, stroke_width=0))
                 mp[id] = name
             if pts[0] == "e":
                 id_from = pts[1]
