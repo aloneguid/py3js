@@ -24,17 +24,18 @@ class Node:
 
 
 class Link:
-    def __init__(self, source: str, target: str, color: str = "orange",
+    def __init__(self, source: str, target: str,
+                 label: str = None,
+                 color: str = "orange",
                  opacity: float = 1.0,
-                 width: float = 1,
-                 is_arrow: bool = True):
+                 width: float = 1):
         self.id = 0
+        self.label = label
         self.source = source
         self.target = target
         self.color = color
         self.opacity = opacity
         self.width = width
-        self.is_arrow = is_arrow
 
 
 class ForceDirectedGraph:
@@ -42,21 +43,36 @@ class ForceDirectedGraph:
     def __init__(self, width: int = 800, height: int = 600,
                  x_levels: int = -1,
                  collision_radius: int = 8,
-                 link_type: str = "link"):
+                 link_type: str = "link",
+                 show_arrows: bool = True,
+                 node_label_font_family: str = "sans-serif",
+                 node_label_font_size: str = "12px",
+                 node_label_color: str = "black",
+                 link_label_font_family: str = "sans-serif",
+                 link_label_font_size: str = "8px",
+                 link_label_color: str = "#aaa"):
         self._html = resources.read_text("py3js", "force.html")
         self._html = (self._html
                       .replace("$width", str(width))
                       .replace("$height", str(height))
                       .replace("$x_levels", str(x_levels))
                       .replace("$collision_radius", str(collision_radius))
-                      .replace("$linkType", link_type))
+                      .replace("$linkType", link_type)
+                      .replace("$showArrows", "true" if show_arrows else "false")
+                      .replace("$nodeFontFamily", node_label_font_family)
+                      .replace("$nodeFontSize", node_label_font_size)
+                      .replace("$nodeFontColor", node_label_color)
+                      .replace("$linkFontFamily", link_label_font_family)
+                      .replace("$linkFontSize", link_label_font_size)
+                      .replace("$linkFontColor", link_label_color))
         self._width = width
         self._height = height
+        self.show_arrows = show_arrows
 
         self._nodes: List[Node] = []
         self._links: List[Link] = []
 
-        self._link_id_i = 0;
+        self._link_id_i = 0
 
     def add_nodes(self, *node: Node):
         for n in node:
@@ -84,12 +100,12 @@ class ForceDirectedGraph:
 
         links = [{
             "id": l.id,
+            "label": l.label,
             "source": l.source,
             "target": l.target,
             "color": l.color,
             "opacity": l.opacity,
-            "width": l.width,
-            "arrow": l.is_arrow
+            "width": l.width
         } for l in self._links]
 
         nodes_json = json.dumps(nodes)

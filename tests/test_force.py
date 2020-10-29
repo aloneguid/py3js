@@ -52,7 +52,7 @@ def test_multi_level():
     for i in range(0, 2):
         n_from = f"lvl1 #{randint(0, 10)}"
         n_to = f"lvl2 #{randint(0, 100)}"
-        g.add_links(Link(n_from, n_to, opacity=0.1, is_arrow=False))
+        g.add_links(Link(n_from, n_to, opacity=0.1))
 
 
     g.save("c:\\tmp\\1.html")
@@ -63,7 +63,7 @@ def test_twitter_nel():
     with open(path, "r") as reader:
         lines = reader.readlines()
 
-    g = ForceDirectedGraph(1000, 1000, collision_radius=20)
+    g = ForceDirectedGraph(1000, 1000, collision_radius=40)
 
     # n 1 apple
     # n 2 store
@@ -81,12 +81,13 @@ def test_twitter_nel():
             if pts[0] == "n":
                 id = pts[1]
                 name = pts[2]
-                g.add_nodes(Node(id, name, f"id: {id}, name: {name}", radius=10 + int(id) * 3, stroke_width=0))
+                g.add_nodes(Node(id, name, f"id: {id}, name: {name}", radius=3 + int(id) * 3, stroke_width=0))
                 mp[id] = name
             if pts[0] == "e":
                 id_from = pts[1]
                 id_to = pts[2]
-                g.add_links(Link(id_from, id_to))
+                label = pts[3]
+                g.add_links(Link(id_from, id_to, opacity=0.5, label=label))
         else:
             mp = dict()
 
