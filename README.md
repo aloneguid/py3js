@@ -14,7 +14,16 @@ pip install py3js
 
 ## Supports
 
-- Force-directed graphs
+### Force Directed Graphs
+
+Features:
+
+- Specify radius, colour, border per node.
+- Node labels and tooltips.
+- Node links can be arrows or arcs.
+- Node links can have labels.
+- X-axis optional grouping.
+- Zoom and pan.
 
 ## Examples
 
