@@ -35,6 +35,10 @@
             width = +svg.attr("width"),
             height = +svg.attr("height");
 
+        // encompassing group for the zoom
+        const g = svg.append("g")
+            .attr("class", "everything");
+
         // build the arrow.
         // there is no way to inherit styles, and edges can be different ones, therefore create def per edge
         if(showArrows) {
@@ -72,6 +76,17 @@
 
         }
 
+        //add zoom capabilities
+        const zoom_handler = d3.zoom()
+            .on("zoom", zoom_actions);
+
+        zoom_handler(svg);
+
+        //Zoom functions
+        function zoom_actions(e){
+            g.attr("transform", e.transform)
+        }
+
         // const link = svg.append("g")
         //     .selectAll("line")
         //     .data(data_links)
@@ -81,7 +96,7 @@
         //     .attr("marker-end", d => d.arrow ? `url(#end-${d.id})` : "")
         //     .attr("stroke-width", d => d.width);
 
-        const link = svg.append("g")
+        const link = g.append("g")
             .attr("fill", "none")
             .attr("stroke-width", 1)
             .selectAll("path")
@@ -94,7 +109,7 @@
             link.attr("marker-end", d => `url(#end-${d.id})`);
         }
 
-        const node = svg.append("g")
+        const node = g.append("g")
             .selectAll("g")
             .data(data_nodes)
             .enter().append("g")
@@ -103,7 +118,7 @@
                 .on("drag", dragMoving)
                 .on("end", dragEnded));
 
-        const linkPath = svg.selectAll(".linkpath")
+        const linkPath = g.selectAll(".linkpath")
             .data(data_links.filter(l => l.label))
             .enter()
             .append('path')
@@ -113,7 +128,7 @@
             .attr("id", d => `lbp${d.id}`)
             .style("pointer-events", "none");
 
-        const linkLabel = svg.selectAll(".linklabel")
+        const linkLabel = g.selectAll(".linklabel")
             .data(data_links.filter(l => l.label))  // build only for edges that have labels
             .enter()
             .append('text')
