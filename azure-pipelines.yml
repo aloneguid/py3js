@@ -13,7 +13,7 @@ pool:
   
 variables:
   - name: v.majorMinor
-    value: '0.4'
+    value: '0.5'
   - name: v.rev
     value: $[counter(variables['v.majorMinor'])]
   - name: v.full

@@ -44,6 +44,7 @@ class ForceDirectedGraph:
                  x_levels: int = -1,
                  collision_radius: int = 8,
                  link_type: str = "link",
+                 link_force: float = 0.3,
                  show_arrows: bool = True,
                  node_label_font_family: str = "sans-serif",
                  node_label_font_size: str = "12px",
@@ -64,7 +65,8 @@ class ForceDirectedGraph:
                       .replace("$nodeFontColor", node_label_color)
                       .replace("$linkFontFamily", link_label_font_family)
                       .replace("$linkFontSize", link_label_font_size)
-                      .replace("$linkFontColor", link_label_color))
+                      .replace("$linkFontColor", link_label_color)
+                      .replace("$linkForce", str(link_force)))
         self._width = width
         self._height = height
         self.show_arrows = show_arrows

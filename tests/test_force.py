@@ -37,25 +37,28 @@ def test_labels_and_strokes():
 
 
 def test_multi_level():
-    g = ForceDirectedGraph(1000, 1000, x_levels=5, collision_radius=1)
+    g = ForceDirectedGraph(1000, 1000, x_levels=3, collision_radius=1, link_force=0)
 
-    for i in range(0, 10):
-        g.add_nodes(Node(f"lvl1 #{i}", tooltip=f"lvl1 #{i}", level=1, radius=randint(1, 40)))
+    def nid(id: int, lvl: int) -> str:
+        return f"node_L{lvl}_I{id}"
 
-    for i in range(0, 100):
-        g.add_nodes(Node(f"lvl2 #{i}", level=2, color="green", radius=randint(1, 15)))
+    def add_lvl(lvl: int, color: str):
+        g.add_nodes(*[Node(nid(i, lvl), radius=randint(1, 20), color=color, level=lvl) for i in range(0, 100)])
 
-    for i in range(0, 100):
-        g.add_nodes(Node(f"lvl3 #{i}", level=3, color="blue", radius=randint(1, 5)))
+    # add nodes for levels
+    add_lvl(1, "red")
+    add_lvl(2, "green")
+    add_lvl(3, "blue")
 
-    # link some
-    for i in range(0, 2):
-        n_from = f"lvl1 #{randint(0, 10)}"
-        n_to = f"lvl2 #{randint(0, 100)}"
-        g.add_links(Link(n_from, n_to, opacity=0.1))
+    # interlink them randomly
 
+    def interlink(from_lvl: int, to_lvl: int):
+        for i in range(0, 100):
+            g.add_links(Link(nid(i, from_lvl), nid(randint(0, 100), to_lvl), color="green"))
 
-    g.save("c:\\tmp\\1.html")
+    interlink(1, 2)
+
+    g.save(save_path)
 
 
 def test_twitter_nel():
