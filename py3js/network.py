@@ -9,10 +9,10 @@ class Node:
                  id: str,
                  label: str = None,
                  tooltip: str = None,
-                 color: str = "black", level: int = None,
-                 radius: int = 8,
-                 stroke_color: str = "black",
-                 stroke_width: int = 1):
+                 color: str = "#57C7E3", level: int = None,
+                 radius: int = 18,
+                 stroke_color: str = "#23B3D7",
+                 stroke_width: int = 2):
         self.id = id
         self.label = label
         self.tooltip = tooltip or label
@@ -26,7 +26,7 @@ class Node:
 class Link:
     def __init__(self, source: str, target: str,
                  label: str = None,
-                 color: str = "orange",
+                 color: str = "#94B3CC",
                  opacity: float = 1.0,
                  width: float = 1):
         self.id = 0
@@ -46,12 +46,13 @@ class ForceDirectedGraph:
                  link_type: str = "link",
                  link_force: float = 0.3,
                  show_arrows: bool = True,
-                 node_label_font_family: str = "sans-serif",
+                 node_label_font_family: str = "Arial",
                  node_label_font_size: str = "12px",
                  node_label_color: str = "black",
-                 link_label_font_family: str = "sans-serif",
+                 link_label_font_family: str = "Arial",
                  link_label_font_size: str = "8px",
-                 link_label_color: str = "#aaa"):
+                 link_label_color: str = "#aaa",
+                 background_color: str = "white"):
         self._html = resources.read_text("py3js", "force.html")
         self._html = (self._html
                       .replace("$width", str(width))
@@ -66,7 +67,8 @@ class ForceDirectedGraph:
                       .replace("$linkFontFamily", link_label_font_family)
                       .replace("$linkFontSize", link_label_font_size)
                       .replace("$linkFontColor", link_label_color)
-                      .replace("$linkForce", str(link_force)))
+                      .replace("$linkForce", str(link_force))
+                      .replace("$backgroundColor", background_color))
         self._width = width
         self._height = height
         self.show_arrows = show_arrows

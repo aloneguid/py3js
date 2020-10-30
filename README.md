@@ -20,10 +20,24 @@ Features:
 
 - Specify radius, colour, border per node.
 - Node labels and tooltips.
-- Node links can be arrows or arcs.
+- Node links can be arrows or arcs, and they automatically adopt to node sizes.
 - Node links can have labels.
 - X-axis optional grouping.
 - Zoom and pan.
+
+#### Labels and Borders
+
+![](media/lblbb.png)
+
+#### Arrows, Arcs and Labels
+
+![](media/lbl1.png)
+
+![](media/lbl2.png)
+
+#### X-Grouping
+
+![](media/xgroup.png)
 
 ## Examples
 

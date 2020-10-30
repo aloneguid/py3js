@@ -52,11 +52,12 @@ def test_multi_level():
 
     # interlink them randomly
 
-    def interlink(from_lvl: int, to_lvl: int):
-        for i in range(0, 100):
-            g.add_links(Link(nid(i, from_lvl), nid(randint(0, 100), to_lvl), color="green"))
+    def interlink(from_lvl: int, to_lvl: int, color: str):
+        for i in range(0, 10):
+            g.add_links(Link(nid(i, from_lvl), nid(randint(0, 100), to_lvl), color=color))
 
-    interlink(1, 2)
+    interlink(1, 2, "green")
+    interlink(2, 3, "blue")
 
     g.save(save_path)
 
@@ -84,7 +85,7 @@ def test_twitter_nel():
             if pts[0] == "n":
                 id = pts[1]
                 name = pts[2]
-                g.add_nodes(Node(id, name, f"id: {id}, name: {name}", radius=3 + int(id) * 3, stroke_width=0))
+                g.add_nodes(Node(id, name, f"id: {id}, name: {name}"))
                 mp[id] = name
             if pts[0] == "e":
                 id_from = pts[1]
