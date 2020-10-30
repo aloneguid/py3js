@@ -102,7 +102,7 @@
 
         const link = g.append("g")
             .attr("fill", "none")
-            .attr("stroke-width", 1)
+            .attr("stroke-width", d => d.width)
             .selectAll("path")
             .data(data_links)
             .join("path")
