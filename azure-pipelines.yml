@@ -16,8 +16,12 @@ variables:
     value: '0.9'
   - name: v.rev
     value: $[counter(variables['v.majorMinor'])]
+  - name: v.prev
+    value: '1'
   - name: v.full
     value: '$(v.majorMinor).$(v.rev)'
+  - name: v.pfull
+    value: '$(v.majorMinor).$(v.prev)'
 
 strategy:
   matrix:
@@ -45,7 +49,7 @@ steps:
     targetType: 'inline'
     script: 'python setup.py sdist bdist_wheel'
   env:
-    v: '$(v.majorMinor).0'
+    v: '$(v.pfull)'
 
 - task: Bash@3
   condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"

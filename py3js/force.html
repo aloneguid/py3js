@@ -102,11 +102,11 @@
 
         const link = g.append("g")
             .attr("fill", "none")
-            .attr("stroke-width", d => d.width)
             .selectAll("path")
             .data(data_links)
             .join("path")
             .attr("stroke", d => d.color)
+            .attr("stroke-width", d => d.width)
             .attr("stroke-opacity", d => d.opacity);
 
         if(showArrows) {
