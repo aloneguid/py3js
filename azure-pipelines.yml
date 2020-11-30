@@ -17,7 +17,7 @@ variables:
   - name: v.rev
     value: $[counter(variables['v.majorMinor'])]
   - name: v.prev
-    value: '1'
+    value: '2'
   - name: v.full
     value: '$(v.majorMinor).$(v.rev)'
   - name: v.pfull

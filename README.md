@@ -14,6 +14,8 @@ pip install py3js
 
 ## Supports
 
+- [Force-Directed Graph](#force-directed-graphs)
+
 ### Force Directed Graphs
 
 Features:
