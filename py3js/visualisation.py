@@ -3,7 +3,7 @@ from importlib import resources
 
 
 class Visualisation:
-    def __init__(self, width, height, template="d3v6.html"):
+    def __init__(self, width, height, template="d3v6.html", background="white"):
         self._width = width
         self._height = height
         if template:
@@ -12,12 +12,16 @@ class Visualisation:
                              .replace("$width", str(width))
                              .replace("$height", str(height)))
 
-        self.style = ""
+        self.style = f"svg {{background-color: \"{background}\"; }}"
         self.script = ""
 
     def add_script(self, line: str):
         self.script += "\n"
         self.script += line
+
+    def add_style(self, line: str):
+        self.style += "\n"
+        self.style += line
 
     def _render_data(self):
         data = (self.html

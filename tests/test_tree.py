@@ -1,4 +1,4 @@
-from py3js.tree import Tree, Node
+from py3js.tree import Tree, Node, TreeKind
 
 save_path = "c:\\tmp\\1.html"
 
@@ -11,5 +11,5 @@ def test_simplest():
         Node("Scala")
     ])
 
-    t = Tree(root)
+    t = Tree(root, TreeKind.RADIAL_TIDY)
     t.save(save_path)
