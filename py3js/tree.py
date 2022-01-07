@@ -16,17 +16,33 @@ class TreeKind(Enum):
 class Node:
     name: str
     children: List["Node"] or None = dataclasses.field(default_factory=list)
+    color: str = None
 
 
 class Tree(Visualisation):
-    def __init__(self, root: Node, kind: TreeKind = TreeKind.TIDY, width=1000, height=600):
+    def __init__(self, root: Node, kind: TreeKind = TreeKind.TIDY, width=1000, height=600,
+                 padding=1,
+                 color="#999",
+                 stroke_color="#555",
+                 stroke_opacity=0.4,
+                 stroke_width=1,
+                 font_family="sans-serif",
+                 font_size=10):
         Visualisation.__init__(self, width, height)
         self._root = root
+        self._padding = padding
+        self._color = color
+        self._stroke_color = stroke_color
+        self._stroke_opacity = stroke_opacity
+        self._stroke_width = stroke_width
+        self._font_family = font_family
+        self._font_size = font_size
 
         if kind == TreeKind.RADIAL_TIDY:
             self.add_radial()
         elif kind == TreeKind.TIDY:
             self.add_normal()
+
 
     def add_radial(self):
         self.add_script("const radius = width/2;")
@@ -87,34 +103,34 @@ class Tree(Visualisation):
         svg.attr("viewBox", autoBox);""")
 
     def add_normal(self):
-        self.add_script("""
-        const padding = 1;
-        const stroke = "#555";
-        const strokeOpacity = 0.4;
+        self.add_script(f"""
+        const padding = {self._padding};
+        const stroke = "{self._stroke_color}";
+        const strokeOpacity = {self._stroke_opacity};
         const strokeLinecap = null;
         const strokeLinejoin = null;
-        const strokeWidth = 1.5;
-        const fill = "#999";
+        const strokeWidth = {self._stroke_width};
+        const fill = "{self._color}";
         const r = 3;
         const halo = "#fff";
         const haloWidth = 3;""")
 
         self.add_script(f"""const data = {json.dumps(asdict(self._root))}""")
 
-        self.add_script("""
+        self.add_script(f"""
             const root = d3.hierarchy(data);
 
-    const dx = 10;
+    const dx = {self._font_size};
     const dy = width / (root.height + padding);
     d3.tree().nodeSize([dx, dy])(root);
 
     // Center the tree.
     let x0 = Infinity;
     let x1 = -x0;
-    root.each(d => {
+    root.each(d => {{
         if (d.x > x1) x1 = d.x;
         if (d.x < x0) x0 = d.x;
-    });
+    }});
 
     height = x1 - x0 + dx * 2;
 
@@ -123,8 +139,8 @@ class Tree(Visualisation):
         .attr("width", width)
         .attr("height", height)
         .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
-        .attr("font-family", "sans-serif")
-        .attr("font-size", 10);
+        .attr("font-family", "{self._font_family}")
+        .attr("font-size", {self._font_size});
 
     svg.append("g")
         .attr("fill", "none")
@@ -146,10 +162,10 @@ class Tree(Visualisation):
         .join("a")
         .attr("xlink:href", null)
         .attr("target", null)
-        .attr("transform", d => `translate(${d.y},${d.x})`);
+        .attr("transform", d => `translate(${{d.y}},${{d.x}})`);
 
     node.append("circle")
-        .attr("fill", d => d.children ? stroke : fill)
+        .attr("fill", d => d.data.color ?? fill)
         .attr("r", r);
 
     node.append("text")
@@ -157,6 +173,7 @@ class Tree(Visualisation):
         .attr("x", d => d.children ? -6 : 6)
         .attr("text-anchor", d => d.children ? "end" : "start")
         .text((d, i) => d.data.name)
+        .style("fill", (d) => d.data.color ?? fill)
         .call(text => text.clone(true))
         .attr("fill", "none")
         .attr("stroke", halo)
