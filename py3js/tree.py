@@ -17,6 +17,7 @@ class Node:
     name: str
     children: List["Node"] or None = dataclasses.field(default_factory=list)
     color: str = None
+    tooltip: str = None
 
 
 class Tree(Visualisation):
@@ -164,7 +165,7 @@ class Tree(Visualisation):
         .attr("target", null)
         .attr("transform", d => `translate(${{d.y}},${{d.x}})`);
         
-    node.append("title").text(d => d.data.name);
+    node.append("title").text(d => d.data.tooltip ?? d.data.name);
 
     node.append("circle")
         .attr("fill", d => d.data.color ?? fill)
