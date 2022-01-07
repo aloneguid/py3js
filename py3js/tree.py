@@ -163,6 +163,8 @@ class Tree(Visualisation):
         .attr("xlink:href", null)
         .attr("target", null)
         .attr("transform", d => `translate(${{d.y}},${{d.x}})`);
+        
+    node.append("title").text(d => d.data.name);
 
     node.append("circle")
         .attr("fill", d => d.data.color ?? fill)
