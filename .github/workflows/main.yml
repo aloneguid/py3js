@@ -27,4 +27,4 @@ jobs:
     - name: Build and publish
       run: |
         python setup.py sdist bdist_wheel
-        twine upload --verbose --non-interactive dist/*
+        twine upload --verbose --non-interactive --username __token__ --password ${{ secrets.PYPI_TOKEN }} dist/*
