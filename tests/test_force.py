@@ -1,7 +1,7 @@
 from py3js.network import ForceDirectedGraph, Node, Link
 from random import randint
 
-save_path = "c:\\tmp\\1.html"
+save_path = "canvas.html"
 
 
 def test_simplest():
@@ -43,7 +43,7 @@ def test_multi_level():
         return f"node_L{lvl}_I{id}"
 
     def add_lvl(lvl: int, color: str):
-        g.add_nodes(*[Node(nid(i, lvl), radius=randint(1, 20), color=color, level=lvl) for i in range(0, 100)])
+        g.add_nodes(*[Node(nid(i, lvl), label="x3", radius=randint(1, 20), color=color, level=lvl) for i in range(0, 100)])
 
     # add nodes for levels
     add_lvl(1, "red")

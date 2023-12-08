@@ -23,7 +23,7 @@
     </style>
 </head>
 <body>
-    <svg width="$width" height="$height"></svg>
+<!--    <svg width="$width" height="$height"></svg>-->
 
     <script>
 
@@ -35,9 +35,11 @@
         const showArrows = $showArrows;
         const linkForce = $linkForce;
 
-        const svg = d3.select("svg"),
-            width = +svg.attr("width"),
-            height = +svg.attr("height");
+        const svg = d3.select("body").append("svg");
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        svg.attr("width", width);
+        svg.attr("height", height);
 
         // encompassing group for the zoom
         const g = svg.append("g")

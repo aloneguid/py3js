@@ -6,17 +6,25 @@
     <title></title>
 </head>
 <body>
-<svg width="800" height="600"></svg>
-
-
+<!--<svg width="1000" height="800"></svg>-->
 
 <script>
 
-    const svg = d3.select("svg");
-    const width = svg.attr("width");
-    const height = svg.attr("height");
+    // use d3 to select a tag with id "py3js" if it exists, otherwise body tag
+    // const svg = d3.select("#py3js").empty() ? d3.select("body") : d3.select("#py3js");
 
-    const radius = width/2;
+    const svg = d3.select("body").append("svg");
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    // add with attribute to svg tag
+    svg.attr("width", width);
+    svg.attr("height", height);
+
+    // const svg = d3.select("svg");
+    // const width = svg.attr("width");
+    // const height = svg.attr("height");
+
+    const radius = Math.min(width, height) / 2;
 
     const data = d3.hierarchy({
  "name": "flare",
