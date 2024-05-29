@@ -28,7 +28,8 @@ class Link:
                  label: str = None,
                  color: str = "#94B3CC",
                  opacity: float = 1.0,
-                 width: float = 1):
+                 width: float = 1,
+                 force: float = None):
         self.id = 0
         self.label = label
         self.source = source
@@ -36,6 +37,7 @@ class Link:
         self.color = color
         self.opacity = opacity
         self.width = width
+        self.force = force
 
 
 class ForceDirectedGraph:
@@ -109,7 +111,8 @@ class ForceDirectedGraph:
             "target": l.target,
             "color": l.color,
             "opacity": l.opacity,
-            "width": l.width
+            "width": l.width,
+            "force": l.force
         } for l in self._links]
 
         nodes_json = json.dumps(nodes)

@@ -5,17 +5,17 @@ save_path = "canvas.html"
 
 
 def test_simplest():
-    g = ForceDirectedGraph(800, 200)
+    g = ForceDirectedGraph(800, 200, link_force=0.5)
 
     nodes = ["dev", "pre-prod", "prod", "developers", "testers", "managers"]
     colours = ["green", "green", "green", "blue", "blue", "blue"]
 
     for n, c in zip(nodes, colours):
-        g.add_nodes(Node(n, color=c))
+        g.add_nodes(Node(n, n, color=c))
 
     # link process
-    g.add_links(Link("dev", "pre-prod"))
-    g.add_links(Link("pre-prod", "prod"))
+    g.add_links(Link("dev", "pre-prod", force=0.1))
+    g.add_links(Link("pre-prod", "prod", force=0.1))
 
     # link involved
     g.add_links(Link("developers", "dev"))

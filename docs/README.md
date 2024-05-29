@@ -8,3 +8,10 @@
 
 Interactive examples/documentation are available in [Jupyter NBViewer](https://nbviewer.jupyter.org/github/aloneguid/py3js/tree/main/examples/).
 
+Supported graph types:
+
+- Force-directed graph.
+- Trees.
+- Word Clouds.
+
+

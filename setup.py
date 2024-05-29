@@ -11,12 +11,12 @@ v = v_env if v_env else v_default
 HERE = pathlib.Path(__file__).parent
 
 # The text of the README file
-README = (HERE / "README.md").read_text()
+README = (HERE / "docs" / "README.md").read_text()
 
 setup(
     name="py3js",
     version=v,
-    description="d3js wrapper. At the moment only for directed force graphs",
+    description="Python library to plot force-directed graphs, trees, wordclouds and so on, using D3JS library.",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/aloneguid/py3js",
